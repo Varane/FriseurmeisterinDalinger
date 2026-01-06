@@ -1,0 +1,27 @@
+backend:
+  name: github
+  repo: Varane/FriseurmeisterinDalinger
+  branch: main
+  base_url: "PLACEHOLDER_OAUTH_BASE_URL"
+  auth_endpoint: "auth"
+
+media_folder: "images/uploads"
+public_folder: "images/uploads"
+
+collections:
+  - name: "gallery"
+    label: "Gallery"
+    files:
+      - name: "gallery"
+        label: "Gallery Items"
+        file: "data/gallery.json"
+        fields:
+          - label: "Items"
+            name: "items"
+            widget: "list"
+            fields:
+              - { label: "Image", name: "src", widget: "image" }
+              - { label: "Alt text", name: "alt", widget: "string" }
+              - { label: "Caption", name: "caption", widget: "string", required: false }
+              - { label: "Featured", name: "featured", widget: "boolean", required: false, default: false }
+              - { label: "Sort order", name: "order", widget: "number", required: false }

@@ -4,6 +4,7 @@ const elements = {
   heroSubheadline: document.getElementById("hero-subheadline"),
   aboutText: document.getElementById("about-text"),
   servicesGrid: document.getElementById("services-grid"),
+  galleryGrid: document.getElementById("gallery-grid"),
   featuredGrid: document.getElementById("featured-products"),
   contactAddress: document.getElementById("contact-address"),
   contactPhone: document.getElementById("contact-phone"),
@@ -68,7 +69,50 @@ const renderFeaturedProducts = (products = []) => {
 
       card.append(title, meta, desc, price);
       elements.featuredGrid.appendChild(card);
-    });
+  });
+};
+
+const renderGallery = (items = []) => {
+  if (!elements.galleryGrid) return;
+  elements.galleryGrid.innerHTML = "";
+
+  if (!Array.isArray(items) || items.length === 0) {
+    const emptyState = document.createElement("p");
+    emptyState.className = "gallery-empty";
+    setText(emptyState, "Noch keine Bilder – bitte im Admin hochladen.");
+    elements.galleryGrid.appendChild(emptyState);
+    return;
+  }
+
+  const sortedItems = [...items].sort((a, b) => {
+    const orderA = typeof a.order === "number" ? a.order : Number.POSITIVE_INFINITY;
+    const orderB = typeof b.order === "number" ? b.order : Number.POSITIVE_INFINITY;
+    if (orderA !== orderB) return orderA - orderB;
+    const featuredA = a.featured ? 1 : 0;
+    const featuredB = b.featured ? 1 : 0;
+    if (featuredA !== featuredB) return featuredB - featuredA;
+    return 0;
+  });
+
+  sortedItems.forEach((item) => {
+    const figure = document.createElement("figure");
+    figure.className = "gallery-item";
+
+    const image = document.createElement("img");
+    image.src = item.src;
+    image.alt = item.alt || "";
+    image.loading = "lazy";
+
+    figure.appendChild(image);
+
+    if (item.caption) {
+      const caption = document.createElement("figcaption");
+      setText(caption, item.caption);
+      figure.appendChild(caption);
+    }
+
+    elements.galleryGrid.appendChild(figure);
+  });
 };
 
 const renderLinks = (site) => {
@@ -111,6 +155,16 @@ const loadContent = async () => {
     renderServices(site.services || []);
     renderLinks(site);
 
+    if (elements.galleryGrid) {
+      const galleryResponse = await fetch("./data/gallery.json");
+      if (galleryResponse.ok) {
+        const galleryData = await galleryResponse.json();
+        renderGallery(galleryData?.items || []);
+      } else {
+        renderGallery([]);
+      }
+    }
+
     if (elements.featuredGrid) {
       const productsResponse = await fetch("./data/products.json");
       if (productsResponse.ok) {
@@ -120,6 +174,7 @@ const loadContent = async () => {
     }
   } catch (error) {
     // Keep the existing HTML content when content loading fails.
+    renderGallery([]);
   }
 };
 

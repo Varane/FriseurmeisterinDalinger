@@ -245,17 +245,47 @@ select:focus-visible {
   color: var(--muted);
 }
 
-.gallery-placeholder {
+.gallery-grid {
   display: grid;
   gap: 1.5rem;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-.gallery-placeholder div {
-  aspect-ratio: 4 / 5;
+@media (min-width: 720px) {
+  .gallery-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .gallery-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.gallery-item {
+  margin: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.gallery-item img {
+  width: 100%;
+  display: block;
   border-radius: var(--radius);
-  border: 1px dashed var(--border);
-  background: #fff;
+  border: 1px solid var(--border);
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+.gallery-item figcaption {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.gallery-empty {
+  color: var(--muted);
+  font-size: 1rem;
 }
 
 .trust-grid {
