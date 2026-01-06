@@ -1,0 +1,41 @@
+{
+  "businessName": "Ina Dalinger – Friseurmeisterin",
+  "tagline": "Haarschnitt · Coloration · Balayage — in München",
+  "heroHeadline": "Präzise Looks. Ruhige Beratung. Meisterhand.",
+  "heroSubheadline": "Individuelle Schnitte, fein abgestimmte Farben und ein ruhiger Salonrahmen für gepflegte, natürliche Ergebnisse.",
+  "heroCtaLabel": "Termin anfragen",
+  "bookingUrl": "https://wa.me/4917678136186?text=Hallo%20Ina%2C%20ich%20m%C3%B6chte%20einen%20Termin%20anfragen.",
+  "buildLabel": "Build 2026-01-06 16:12",
+  "aboutText": "Als Friseurmeisterin kombiniere ich präzises Handwerk mit einer ruhigen, individuellen Beratung. Im Fokus stehen klare Linien, harmonische Farbverläufe und ein gepflegtes Gesamtbild. Jede Behandlung beginnt mit Zeit für deine Wünsche.",
+  "services": [
+    {
+      "title": "Haarschnitt",
+      "description": "Individuelle Schnitte für klare Linien und natürliche Bewegung."
+    },
+    {
+      "title": "Coloration",
+      "description": "Feine Farbkonzepte mit Tiefe, Balance und natürlichem Verlauf."
+    },
+    {
+      "title": "Balayage",
+      "description": "Weiche Highlights für einen eleganten, lichtvollen Look."
+    },
+    {
+      "title": "Shatush",
+      "description": "Sanfte Übergänge für ein ruhiges, nuanciertes Farbspiel."
+    },
+    {
+      "title": "Haarpflege-Beratung",
+      "description": "Pflege-Empfehlungen passend zu Struktur, Farbe und Alltag."
+    }
+  ],
+  "contact": {
+    "address": "Nordendstraße 19, 80799 München",
+    "phone": "+49 176 78136186",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Nordendstra%C3%9Fe%2019%2C%2080799%20M%C3%BCnchen%2C%20Deutschland",
+    "whatsAppUrl": "https://wa.me/4917678136186?text=Hallo%20Ina%2C%20ich%20m%C3%B6chte%20einen%20Termin%20anfragen."
+  },
+  "socials": {
+    "instagramUrl": "https://www.instagram.com/ina_dalinger/"
+  }
+}
