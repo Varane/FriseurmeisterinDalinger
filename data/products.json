@@ -1,122 +1,122 @@
 [
   {
     "id": "prod-001",
-    "slug": "pflege-essentials",
-    "name": "Pflege Essentials",
-    "brand": "Studio Selection",
-    "category": "Haircare",
-    "priceEur": null,
+    "slug": "placeholder-collier",
+    "name": "PLACEHOLDER_PRODUCT_NAME_1",
+    "brand": "PLACEHOLDER_BRAND",
+    "category": "PLACEHOLDER_CATEGORY",
+    "priceEur": 120,
     "currency": "EUR",
     "featured": true,
     "inStock": true,
     "images": [
       {
-        "src": "",
-        "alt": "Produktbild folgt"
+        "src": "../assets/placeholder-1.jpg",
+        "alt": "PLACEHOLDER_PRODUCT_IMAGE_1"
       }
     ],
-    "shortDescription": "Pflege-Routine für Glanz und Geschmeidigkeit.",
-    "description": "Ideal für den Einstieg in eine ruhige, strukturierte Pflege-Routine.",
-    "paymentLinkUrl": ""
+    "shortDescription": "PLACEHOLDER_SHORT_DESC_1",
+    "description": "PLACEHOLDER_LONG_DESC_1",
+    "paymentLinkUrl": "PLACEHOLDER_STRIPE_PAYMENT_LINK"
   },
   {
     "id": "prod-002",
-    "slug": "color-care-serum",
-    "name": "Color Care Serum",
-    "brand": "Studio Selection",
-    "category": "Color",
-    "priceEur": null,
+    "slug": "placeholder-bracelet",
+    "name": "PLACEHOLDER_PRODUCT_NAME_2",
+    "brand": "PLACEHOLDER_BRAND",
+    "category": "PLACEHOLDER_CATEGORY",
+    "priceEur": 160,
     "currency": "EUR",
     "featured": true,
     "inStock": true,
     "images": [
       {
-        "src": "",
-        "alt": "Produktbild folgt"
+        "src": "../assets/placeholder-2.jpg",
+        "alt": "PLACEHOLDER_PRODUCT_IMAGE_2"
       }
     ],
-    "shortDescription": "Leichtes Serum für veredelte Farbtöne.",
-    "description": "Unterstützt Farbbrillanz und schützt vor täglicher Belastung.",
-    "paymentLinkUrl": ""
+    "shortDescription": "PLACEHOLDER_SHORT_DESC_2",
+    "description": "PLACEHOLDER_LONG_DESC_2",
+    "paymentLinkUrl": "PLACEHOLDER_STRIPE_PAYMENT_LINK"
   },
   {
     "id": "prod-003",
-    "slug": "balayage-ritual",
-    "name": "Balayage Ritual",
-    "brand": "Studio Selection",
-    "category": "Balayage",
-    "priceEur": null,
+    "slug": "placeholder-ring",
+    "name": "PLACEHOLDER_PRODUCT_NAME_3",
+    "brand": "PLACEHOLDER_BRAND",
+    "category": "PLACEHOLDER_CATEGORY",
+    "priceEur": 210,
     "currency": "EUR",
     "featured": true,
     "inStock": true,
     "images": [
       {
-        "src": "",
-        "alt": "Produktbild folgt"
+        "src": "../assets/placeholder-3.jpg",
+        "alt": "PLACEHOLDER_PRODUCT_IMAGE_3"
       }
     ],
-    "shortDescription": "Pflege für weiche Übergänge und samtigen Glanz.",
-    "description": "Ein sanftes Ritual für Balayage-Looks mit natürlicher Bewegung.",
-    "paymentLinkUrl": ""
+    "shortDescription": "PLACEHOLDER_SHORT_DESC_3",
+    "description": "PLACEHOLDER_LONG_DESC_3",
+    "paymentLinkUrl": "PLACEHOLDER_STRIPE_PAYMENT_LINK"
   },
   {
     "id": "prod-004",
-    "slug": "shine-mist",
-    "name": "Shine Mist",
-    "brand": "Studio Selection",
-    "category": "Finish",
-    "priceEur": null,
+    "slug": "placeholder-comb",
+    "name": "PLACEHOLDER_PRODUCT_NAME_4",
+    "brand": "PLACEHOLDER_BRAND",
+    "category": "PLACEHOLDER_CATEGORY",
+    "priceEur": 48,
     "currency": "EUR",
     "featured": false,
     "inStock": true,
     "images": [
       {
-        "src": "",
-        "alt": "Produktbild folgt"
+        "src": "../assets/placeholder-4.jpg",
+        "alt": "PLACEHOLDER_PRODUCT_IMAGE_4"
       }
     ],
-    "shortDescription": "Feiner Nebel für gepflegtes Finish.",
-    "description": "Ein ruhiger Abschluss für geschmeidige Strähnen und Balance.",
-    "paymentLinkUrl": ""
+    "shortDescription": "PLACEHOLDER_SHORT_DESC_4",
+    "description": "PLACEHOLDER_LONG_DESC_4",
+    "paymentLinkUrl": "PLACEHOLDER_STRIPE_PAYMENT_LINK"
   },
   {
     "id": "prod-005",
-    "slug": "repair-mask",
-    "name": "Repair Maske",
-    "brand": "Studio Selection",
-    "category": "Treatment",
-    "priceEur": null,
+    "slug": "placeholder-clip",
+    "name": "PLACEHOLDER_PRODUCT_NAME_5",
+    "brand": "PLACEHOLDER_BRAND",
+    "category": "PLACEHOLDER_CATEGORY",
+    "priceEur": 75,
     "currency": "EUR",
     "featured": false,
     "inStock": true,
     "images": [
       {
-        "src": "",
-        "alt": "Produktbild folgt"
+        "src": "../assets/placeholder-5.jpg",
+        "alt": "PLACEHOLDER_PRODUCT_IMAGE_5"
       }
     ],
-    "shortDescription": "Intensive Pflege für Struktur und Geschmeidigkeit.",
-    "description": "Für Zeiten, in denen das Haar besondere Aufmerksamkeit benötigt.",
-    "paymentLinkUrl": ""
+    "shortDescription": "PLACEHOLDER_SHORT_DESC_5",
+    "description": "PLACEHOLDER_LONG_DESC_5",
+    "paymentLinkUrl": "PLACEHOLDER_STRIPE_PAYMENT_LINK"
   },
   {
     "id": "prod-006",
-    "slug": "texture-cream",
-    "name": "Texture Cream",
-    "brand": "Studio Selection",
-    "category": "Styling",
-    "priceEur": null,
+    "slug": "placeholder-gift",
+    "name": "PLACEHOLDER_PRODUCT_NAME_6",
+    "brand": "PLACEHOLDER_BRAND",
+    "category": "PLACEHOLDER_CATEGORY",
+    "priceEur": 95,
     "currency": "EUR",
     "featured": false,
     "inStock": true,
     "images": [
       {
-        "src": "",
-        "alt": "Produktbild folgt"
+        "src": "../assets/placeholder-6.jpg",
+        "alt": "PLACEHOLDER_PRODUCT_IMAGE_6"
       }
     ],
-    "shortDescription": "Definition mit weichem, natürlichem Halt.",
-    "description": "Für klare Formen und ein ruhiges Finish ohne Härte.",
-    "paymentLinkUrl": ""
+    "shortDescription": "PLACEHOLDER_SHORT_DESC_6",
+    "description": "PLACEHOLDER_LONG_DESC_6",
+    "paymentLinkUrl": "PLACEHOLDER_STRIPE_PAYMENT_LINK"
   }
 ]
