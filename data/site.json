@@ -1,0 +1,24 @@
+{
+  "businessName": "Ina Dalinger – Friseurmeisterin",
+  "tagline": "PLACEHOLDER_TAGLINE",
+  "heroHeadline": "PLACEHOLDER_HERO_HEADLINE",
+  "heroSubheadline": "PLACEHOLDER_HERO_SUBHEADLINE",
+  "heroCtaLabel": "Termin anfragen",
+  "bookingUrl": "PLACEHOLDER_BOOKING_URL",
+  "aboutText": "PLACEHOLDER_ABOUT_TEXT",
+  "services": [
+    {
+      "title": "PLACEHOLDER_SERVICE_1",
+      "description": "PLACEHOLDER_SERVICE_1_DESC"
+    }
+  ],
+  "contact": {
+    "address": "PLACEHOLDER_ADDRESS",
+    "phone": "PLACEHOLDER_PHONE",
+    "email": "PLACEHOLDER_EMAIL",
+    "mapsUrl": "PLACEHOLDER_GOOGLE_MAPS_URL"
+  },
+  "socials": {
+    "instagramUrl": "https://www.instagram.com/ina_dalinger/"
+  }
+}
