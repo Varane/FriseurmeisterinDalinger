@@ -1,0 +1,122 @@
+[
+  {
+    "id": "prod-001",
+    "slug": "pflege-essentials",
+    "name": "Pflege Essentials",
+    "brand": "Studio Selection",
+    "category": "Haircare",
+    "priceEur": null,
+    "currency": "EUR",
+    "featured": true,
+    "inStock": true,
+    "images": [
+      {
+        "src": "",
+        "alt": "Produktbild folgt"
+      }
+    ],
+    "shortDescription": "Pflege-Routine für Glanz und Geschmeidigkeit.",
+    "description": "Ideal für den Einstieg in eine ruhige, strukturierte Pflege-Routine.",
+    "paymentLinkUrl": ""
+  },
+  {
+    "id": "prod-002",
+    "slug": "color-care-serum",
+    "name": "Color Care Serum",
+    "brand": "Studio Selection",
+    "category": "Color",
+    "priceEur": null,
+    "currency": "EUR",
+    "featured": true,
+    "inStock": true,
+    "images": [
+      {
+        "src": "",
+        "alt": "Produktbild folgt"
+      }
+    ],
+    "shortDescription": "Leichtes Serum für veredelte Farbtöne.",
+    "description": "Unterstützt Farbbrillanz und schützt vor täglicher Belastung.",
+    "paymentLinkUrl": ""
+  },
+  {
+    "id": "prod-003",
+    "slug": "balayage-ritual",
+    "name": "Balayage Ritual",
+    "brand": "Studio Selection",
+    "category": "Balayage",
+    "priceEur": null,
+    "currency": "EUR",
+    "featured": true,
+    "inStock": true,
+    "images": [
+      {
+        "src": "",
+        "alt": "Produktbild folgt"
+      }
+    ],
+    "shortDescription": "Pflege für weiche Übergänge und samtigen Glanz.",
+    "description": "Ein sanftes Ritual für Balayage-Looks mit natürlicher Bewegung.",
+    "paymentLinkUrl": ""
+  },
+  {
+    "id": "prod-004",
+    "slug": "shine-mist",
+    "name": "Shine Mist",
+    "brand": "Studio Selection",
+    "category": "Finish",
+    "priceEur": null,
+    "currency": "EUR",
+    "featured": false,
+    "inStock": true,
+    "images": [
+      {
+        "src": "",
+        "alt": "Produktbild folgt"
+      }
+    ],
+    "shortDescription": "Feiner Nebel für gepflegtes Finish.",
+    "description": "Ein ruhiger Abschluss für geschmeidige Strähnen und Balance.",
+    "paymentLinkUrl": ""
+  },
+  {
+    "id": "prod-005",
+    "slug": "repair-mask",
+    "name": "Repair Maske",
+    "brand": "Studio Selection",
+    "category": "Treatment",
+    "priceEur": null,
+    "currency": "EUR",
+    "featured": false,
+    "inStock": true,
+    "images": [
+      {
+        "src": "",
+        "alt": "Produktbild folgt"
+      }
+    ],
+    "shortDescription": "Intensive Pflege für Struktur und Geschmeidigkeit.",
+    "description": "Für Zeiten, in denen das Haar besondere Aufmerksamkeit benötigt.",
+    "paymentLinkUrl": ""
+  },
+  {
+    "id": "prod-006",
+    "slug": "texture-cream",
+    "name": "Texture Cream",
+    "brand": "Studio Selection",
+    "category": "Styling",
+    "priceEur": null,
+    "currency": "EUR",
+    "featured": false,
+    "inStock": true,
+    "images": [
+      {
+        "src": "",
+        "alt": "Produktbild folgt"
+      }
+    ],
+    "shortDescription": "Definition mit weichem, natürlichem Halt.",
+    "description": "Für klare Formen und ein ruhiges Finish ohne Härte.",
+    "paymentLinkUrl": ""
+  }
+]
