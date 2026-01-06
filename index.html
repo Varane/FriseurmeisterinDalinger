@@ -37,11 +37,13 @@
               <a class="button secondary" href="./shop/">Zum Shop</a>
             </div>
           </div>
-          <div class="hero-card" aria-hidden="true">
-            <div class="hero-card-inner">
-              <div class="hero-placeholder">Zeitlose Eleganz</div>
-              <p class="hero-note">Minimal, ruhig, mit Fokus auf präzise Linien und natürliche Übergänge.</p>
-            </div>
+          <div class="hero-card hero-media">
+            <img
+              src="images/hero/hero-scissors-in-hand.webp"
+              alt="Hand holding hairdressing scissors in front of a mirror."
+              loading="eager"
+              decoding="async"
+            />
           </div>
         </div>
       </section>
@@ -82,13 +84,44 @@
       <section id="featured" class="section muted">
         <div class="container">
           <div class="section-header">
-            <h2>Produkt-Highlights</h2>
-            <p>Ausgewählte Favoriten für gepflegte Looks.</p>
+            <h2>Produkte im Studio</h2>
+            <p>Produkte im Studio (Online-Shop folgt).</p>
           </div>
-          <div class="card-grid" id="featured-products"></div>
-          <div class="section-cta">
-            <a class="button secondary" href="./shop/">Alle Produkte ansehen</a>
+          <div class="product-teaser-grid">
+            <figure class="product-teaser-card">
+              <img
+                src="images/products/glynt-derma-regulate-tonic-04-and-revital-regain-milk-03.webp"
+                alt="Glynt Derma Regulate Tonic und Revital Regain Milk."
+                loading="lazy"
+                decoding="async"
+              />
+            </figure>
+            <figure class="product-teaser-card">
+              <img
+                src="images/products/glynt-derma-regulate-tonic-04-and-revital-regain-milk-03-closeup.webp"
+                alt="Nahaufnahme von Glynt Derma Regulate Tonic und Revital Regain Milk."
+                loading="lazy"
+                decoding="async"
+              />
+            </figure>
+            <figure class="product-teaser-card">
+              <img
+                src="images/products/glynt-derma-shampoo-tonic-revital-milk-set.webp"
+                alt="Glynt Derma Shampoo, Tonic und Revital Milk Set."
+                loading="lazy"
+                decoding="async"
+              />
+            </figure>
+            <figure class="product-teaser-card">
+              <img
+                src="images/products/glynt-range-derma-derma-tonic-revital-refresh-volume.webp"
+                alt="Glynt Derma Pflegeprodukt-Range."
+                loading="lazy"
+                decoding="async"
+              />
+            </figure>
           </div>
+          <p class="product-teaser-note">Bald im Shop.</p>
         </div>
       </section>
 
@@ -145,6 +178,14 @@
         </div>
       </div>
     </footer>
+
+    <dialog class="lightbox" id="gallery-lightbox" aria-label="Galerie-Ansicht">
+      <div class="lightbox-inner">
+        <button class="icon-button lightbox-close" type="button" aria-label="Schließen">&times;</button>
+        <img class="lightbox-image" alt="" />
+        <p class="lightbox-caption"></p>
+      </div>
+    </dialog>
 
     <script src="./assets/app.js?v=202502141030" defer></script>
   </body>
