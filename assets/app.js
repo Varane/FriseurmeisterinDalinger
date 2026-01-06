@@ -1,5 +1,3 @@
-const PLACEHOLDER_PREFIX = "PLACEHOLDER_";
-
 const elements = {
   tagline: document.getElementById("site-tagline"),
   heroHeadline: document.getElementById("hero-headline"),
@@ -9,12 +7,13 @@ const elements = {
   featuredGrid: document.getElementById("featured-products"),
   contactAddress: document.getElementById("contact-address"),
   contactPhone: document.getElementById("contact-phone"),
-  contactEmail: document.getElementById("contact-email"),
+  contactWhatsApp: document.getElementById("contact-whatsapp"),
   contactMaps: document.getElementById("contact-maps"),
   heroCta: document.getElementById("hero-cta"),
   bookingLink: document.getElementById("booking-link"),
   footerYear: document.getElementById("footer-year"),
-  instagramLink: document.getElementById("instagram-link")
+  instagramLink: document.getElementById("instagram-link"),
+  buildLabel: document.getElementById("build-label")
 };
 
 const setText = (element, value) => {
@@ -22,9 +21,6 @@ const setText = (element, value) => {
     element.textContent = value ?? "";
   }
 };
-
-const isPlaceholder = (value) =>
-  typeof value !== "string" || value.startsWith(PLACEHOLDER_PREFIX);
 
 const renderServices = (services = []) => {
   if (!elements.servicesGrid) return;
@@ -35,10 +31,10 @@ const renderServices = (services = []) => {
     card.className = "card";
 
     const title = document.createElement("h3");
-    setText(title, service.title || "PLACEHOLDER_SERVICE");
+    setText(title, service.title);
 
     const desc = document.createElement("p");
-    setText(desc, service.description || "PLACEHOLDER_SERVICE_DESC");
+    setText(desc, service.description);
 
     card.append(title, desc);
     elements.servicesGrid.appendChild(card);
@@ -57,79 +53,73 @@ const renderFeaturedProducts = (products = []) => {
       card.className = "card";
 
       const title = document.createElement("h3");
-      setText(title, product.name || "PLACEHOLDER_PRODUCT_NAME");
+      setText(title, product.name);
 
       const meta = document.createElement("p");
       meta.className = "product-meta";
-      setText(meta, `${product.brand || "PLACEHOLDER_BRAND"} · ${product.category || "PLACEHOLDER_CATEGORY"}`);
+      setText(meta, `${product.brand} · ${product.category}`);
 
       const desc = document.createElement("p");
-      setText(desc, product.shortDescription || "PLACEHOLDER_SHORT_DESC");
+      setText(desc, product.shortDescription);
 
       const price = document.createElement("p");
       price.className = "product-price";
-      setText(price, `${product.priceEur ?? "--"} ${product.currency || "EUR"}`);
+      setText(price, `${product.priceEur} ${product.currency}`);
 
       card.append(title, meta, desc, price);
       elements.featuredGrid.appendChild(card);
     });
 };
 
-const renderBookingLinks = (site) => {
-  const bookingUrl = site.bookingUrl;
-  const shouldLink = bookingUrl && !isPlaceholder(bookingUrl);
-  const target = shouldLink ? bookingUrl : "#contact";
-
-  if (elements.heroCta) {
-    elements.heroCta.setAttribute("href", target);
+const renderLinks = (site) => {
+  if (site.contact?.phone && elements.contactPhone) {
+    const phoneHref = site.contact.phone.replace(/\s+/g, "");
+    elements.contactPhone.setAttribute("href", `tel:${phoneHref}`);
+    setText(elements.contactPhone, site.contact.phone);
   }
-  if (elements.bookingLink) {
-    elements.bookingLink.setAttribute("href", target);
+
+  if (site.contact?.whatsAppUrl) {
+    [elements.contactWhatsApp, elements.heroCta, elements.bookingLink].forEach((link) => {
+      if (link) {
+        link.setAttribute("href", site.contact.whatsAppUrl);
+      }
+    });
+  }
+
+  if (elements.contactMaps && site.contact?.mapsUrl) {
+    elements.contactMaps.setAttribute("href", site.contact.mapsUrl);
+  }
+
+  if (elements.instagramLink && site.socials?.instagramUrl) {
+    elements.instagramLink.setAttribute("href", site.socials.instagramUrl);
   }
 };
 
 const loadContent = async () => {
   try {
-    const [siteResponse, productsResponse] = await Promise.all([
-      fetch("./data/site.json"),
-      fetch("./data/products.json")
-    ]);
-
-    if (!siteResponse.ok || !productsResponse.ok) {
-      throw new Error("Content fetch failed");
-    }
-
+    const siteResponse = await fetch("./data/site.json");
+    if (!siteResponse.ok) return;
     const site = await siteResponse.json();
-    const products = await productsResponse.json();
 
     setText(elements.tagline, site.tagline);
     setText(elements.heroHeadline, site.heroHeadline);
     setText(elements.heroSubheadline, site.heroSubheadline);
     setText(elements.aboutText, site.aboutText);
+    setText(elements.contactAddress, site.contact?.address);
+    setText(elements.buildLabel, site.buildLabel);
 
     renderServices(site.services || []);
-    renderFeaturedProducts(products || []);
+    renderLinks(site);
 
-    setText(elements.contactAddress, site.contact?.address);
-    setText(elements.contactPhone, site.contact?.phone);
-    setText(elements.contactEmail, site.contact?.email);
-
-    if (elements.contactMaps) {
-      elements.contactMaps.setAttribute("href", site.contact?.mapsUrl || "#");
-    }
-
-    if (elements.instagramLink && site.socials?.instagramUrl) {
-      elements.instagramLink.setAttribute("href", site.socials.instagramUrl);
-    }
-
-    renderBookingLinks(site);
-  } catch (error) {
-    const fallback = document.createElement("p");
-    fallback.className = "product-meta";
-    fallback.textContent = "Inhalte konnten nicht geladen werden. Bitte später erneut versuchen.";
     if (elements.featuredGrid) {
-      elements.featuredGrid.appendChild(fallback);
+      const productsResponse = await fetch("./data/products.json");
+      if (productsResponse.ok) {
+        const products = await productsResponse.json();
+        renderFeaturedProducts(products || []);
+      }
     }
+  } catch (error) {
+    // Keep the existing HTML content when content loading fails.
   }
 };
 

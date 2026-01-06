@@ -1,7 +1,6 @@
-const PLACEHOLDER_PREFIX = "PLACEHOLDER_";
-
 const state = {
   products: [],
+  site: null,
   filters: {
     category: "all",
     min: "",
@@ -31,20 +30,17 @@ const elements = {
   footerYear: document.getElementById("footer-year")
 };
 
-const isPlaceholder = (value) =>
-  typeof value !== "string" || value.startsWith(PLACEHOLDER_PREFIX);
-
 const setText = (element, value) => {
   if (element) {
     element.textContent = value ?? "";
   }
 };
 
-const formatPrice = (value) => `${value} EUR`;
+const formatPrice = (value, currency) => `${value} ${currency}`;
 
 const buildCategoryOptions = (products) => {
   const categories = Array.from(
-    new Set(products.map((product) => product.category || "PLACEHOLDER_CATEGORY"))
+    new Set(products.map((product) => product.category).filter(Boolean))
   ).sort();
 
   const options = ["all", ...categories];
@@ -125,9 +121,41 @@ const applyFilters = () => {
   renderProducts(filtered);
 };
 
+const renderEmptyState = () => {
+  if (!elements.grid) return;
+  elements.grid.innerHTML = "";
+
+  const wrapper = document.createElement("div");
+  wrapper.className = "card";
+
+  const title = document.createElement("h3");
+  setText(title, "Aktuell keine Produkte online.");
+
+  const text = document.createElement("p");
+  setText(text, "Schreib uns auf WhatsApp – wir empfehlen passende Pflege.");
+
+  wrapper.append(title, text);
+
+  if (state.site?.contact?.whatsAppUrl) {
+    const cta = document.createElement("a");
+    cta.className = "button primary";
+    cta.setAttribute("href", state.site.contact.whatsAppUrl);
+    cta.textContent = "WhatsApp schreiben";
+    wrapper.appendChild(cta);
+  }
+
+  elements.grid.appendChild(wrapper);
+  setText(elements.status, "Aktuell keine Produkte online.");
+};
+
 const renderProducts = (products) => {
   if (!elements.grid) return;
   elements.grid.innerHTML = "";
+
+  if (!products.length) {
+    renderEmptyState();
+    return;
+  }
 
   setText(elements.status, `${products.length} Produkte verfügbar`);
 
@@ -148,44 +176,47 @@ const renderProducts = (products) => {
 
     const title = document.createElement("h3");
     title.className = "product-title";
-    setText(title, product.name || "PLACEHOLDER_PRODUCT_NAME");
+    setText(title, product.name);
 
     const meta = document.createElement("p");
     meta.className = "product-meta";
-    setText(meta, `${product.brand || "PLACEHOLDER_BRAND"} · ${product.category || "PLACEHOLDER_CATEGORY"}`);
+    setText(meta, `${product.brand} · ${product.category}`);
 
-    const desc = document.createElement("p");
-    desc.className = "product-meta";
-    setText(desc, product.shortDescription || "PLACEHOLDER_SHORT_DESC");
+    if (product.shortDescription) {
+      const desc = document.createElement("p");
+      desc.className = "product-meta";
+      setText(desc, product.shortDescription);
+      body.append(badge, title, meta, desc);
+    } else {
+      body.append(badge, title, meta);
+    }
 
-    const price = document.createElement("p");
-    price.className = "product-price";
-    setText(price, formatPrice(product.priceEur ?? "--"));
-
-    body.append(badge, title, meta, desc, price);
+    if (product.priceEur && product.currency) {
+      const price = document.createElement("p");
+      price.className = "product-price";
+      setText(price, formatPrice(product.priceEur, product.currency));
+      body.appendChild(price);
+    }
 
     const actions = document.createElement("div");
     actions.className = "product-actions";
 
-    const buy = document.createElement("a");
-    buy.className = "button primary";
-    buy.setAttribute("target", "_blank");
-    buy.setAttribute("rel", "noreferrer");
-
-    if (product.paymentLinkUrl && !isPlaceholder(product.paymentLinkUrl)) {
+    if (product.paymentLinkUrl) {
+      const buy = document.createElement("a");
+      buy.className = "button primary";
+      buy.setAttribute("target", "_blank");
+      buy.setAttribute("rel", "noreferrer");
       buy.setAttribute("href", product.paymentLinkUrl);
-      buy.textContent = "Buy now";
-    } else {
-      buy.setAttribute("href", "#");
-      buy.setAttribute("aria-disabled", "true");
-      buy.textContent = "Not configured";
+      buy.textContent = "Jetzt kaufen";
+      actions.appendChild(buy);
     }
 
-    const details = document.createElement("p");
-    details.className = "product-meta";
-    setText(details, product.description || "PLACEHOLDER_LONG_DESC");
-
-    actions.append(buy, details);
+    if (product.description) {
+      const details = document.createElement("p");
+      details.className = "product-meta";
+      setText(details, product.description);
+      actions.appendChild(details);
+    }
 
     card.append(media, body, actions);
     elements.grid.appendChild(card);
@@ -240,11 +271,23 @@ const initDialog = () => {
   });
 };
 
-const loadProducts = async () => {
+const loadShopData = async () => {
   try {
-    const response = await fetch("../data/products.json");
-    if (!response.ok) throw new Error("Failed to load products");
-    const products = await response.json();
+    const [productsResponse, siteResponse] = await Promise.all([
+      fetch("../data/products.json"),
+      fetch("../data/site.json")
+    ]);
+
+    if (siteResponse.ok) {
+      state.site = await siteResponse.json();
+    }
+
+    if (!productsResponse.ok) {
+      setText(elements.status, "Produkte konnten nicht geladen werden.");
+      return;
+    }
+
+    const products = await productsResponse.json();
     state.products = products;
     buildCategoryOptions(products);
     initFilters();
@@ -257,4 +300,4 @@ const loadProducts = async () => {
 
 setText(elements.footerYear, new Date().getFullYear().toString());
 
-loadProducts();
+loadShopData();
