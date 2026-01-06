@@ -312,12 +312,6 @@ select:focus-visible {
   color: var(--muted);
 }
 
-.footer-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
 .shop-page {
   padding-bottom: 4rem;
 }
