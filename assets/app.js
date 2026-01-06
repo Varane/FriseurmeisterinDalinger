@@ -1,3 +1,5 @@
+const PLACEHOLDER_PREFIX = "PLACEHOLDER_";
+
 const elements = {
   tagline: document.getElementById("site-tagline"),
   heroHeadline: document.getElementById("hero-headline"),
@@ -7,7 +9,7 @@ const elements = {
   featuredGrid: document.getElementById("featured-products"),
   contactAddress: document.getElementById("contact-address"),
   contactPhone: document.getElementById("contact-phone"),
-  contactWhatsApp: document.getElementById("contact-whatsapp"),
+  contactEmail: document.getElementById("contact-email"),
   contactMaps: document.getElementById("contact-maps"),
   heroCta: document.getElementById("hero-cta"),
   bookingLink: document.getElementById("booking-link"),
@@ -16,10 +18,13 @@ const elements = {
 };
 
 const setText = (element, value) => {
-  if (element && value !== undefined && value !== null) {
-    element.textContent = value;
+  if (element) {
+    element.textContent = value ?? "";
   }
 };
+
+const isPlaceholder = (value) =>
+  typeof value !== "string" || value.startsWith(PLACEHOLDER_PREFIX);
 
 const renderServices = (services = []) => {
   if (!elements.servicesGrid) return;
@@ -30,10 +35,10 @@ const renderServices = (services = []) => {
     card.className = "card";
 
     const title = document.createElement("h3");
-    setText(title, service.title || "Service");
+    setText(title, service.title || "PLACEHOLDER_SERVICE");
 
     const desc = document.createElement("p");
-    setText(desc, service.description || "Details folgen.");
+    setText(desc, service.description || "PLACEHOLDER_SERVICE_DESC");
 
     card.append(title, desc);
     elements.servicesGrid.appendChild(card);
@@ -52,18 +57,18 @@ const renderFeaturedProducts = (products = []) => {
       card.className = "card";
 
       const title = document.createElement("h3");
-      setText(title, product.name || "Produkt");
+      setText(title, product.name || "PLACEHOLDER_PRODUCT_NAME");
 
       const meta = document.createElement("p");
       meta.className = "product-meta";
-      setText(meta, `${product.brand || "Studio"} · ${product.category || "Kategorie"}`);
+      setText(meta, `${product.brand || "PLACEHOLDER_BRAND"} · ${product.category || "PLACEHOLDER_CATEGORY"}`);
 
       const desc = document.createElement("p");
-      setText(desc, product.shortDescription || "Details folgen.");
+      setText(desc, product.shortDescription || "PLACEHOLDER_SHORT_DESC");
 
       const price = document.createElement("p");
       price.className = "product-price";
-      setText(price, product.priceEur ? `${product.priceEur} ${product.currency || "EUR"}` : "Preis auf Anfrage");
+      setText(price, `${product.priceEur ?? "--"} ${product.currency || "EUR"}`);
 
       card.append(title, meta, desc, price);
       elements.featuredGrid.appendChild(card);
@@ -72,7 +77,8 @@ const renderFeaturedProducts = (products = []) => {
 
 const renderBookingLinks = (site) => {
   const bookingUrl = site.bookingUrl;
-  const target = bookingUrl || "#contact";
+  const shouldLink = bookingUrl && !isPlaceholder(bookingUrl);
+  const target = shouldLink ? bookingUrl : "#contact";
 
   if (elements.heroCta) {
     elements.heroCta.setAttribute("href", target);
@@ -105,13 +111,8 @@ const loadContent = async () => {
     renderFeaturedProducts(products || []);
 
     setText(elements.contactAddress, site.contact?.address);
-    if (elements.contactPhone && site.contact?.phone) {
-      elements.contactPhone.setAttribute("href", `tel:${site.contact.phone.replace(/\s+/g, "")}`);
-      elements.contactPhone.textContent = site.contact.phone;
-    }
-    if (elements.contactWhatsApp && site.contact?.whatsAppUrl) {
-      elements.contactWhatsApp.setAttribute("href", site.contact.whatsAppUrl);
-    }
+    setText(elements.contactPhone, site.contact?.phone);
+    setText(elements.contactEmail, site.contact?.email);
 
     if (elements.contactMaps) {
       elements.contactMaps.setAttribute("href", site.contact?.mapsUrl || "#");

@@ -1,34 +1,22 @@
 {
   "businessName": "Ina Dalinger – Friseurmeisterin",
-  "tagline": "Hairstylist & Colorist · DE/RU",
-  "heroHeadline": "Feine Farbwelten, präzise Schnitte, ruhige Eleganz.",
-  "heroSubheadline": "Individuelle Colorationen, Balayage und Haarpflege für einen klaren, luxuriösen Look – persönlich beraten in München.",
+  "tagline": "PLACEHOLDER_TAGLINE",
+  "heroHeadline": "PLACEHOLDER_HERO_HEADLINE",
+  "heroSubheadline": "PLACEHOLDER_HERO_SUBHEADLINE",
   "heroCtaLabel": "Termin anfragen",
-  "bookingUrl": "https://wa.me/4917678136186?text=Hallo%20Ina%2C%20ich%20m%C3%B6chte%20einen%20Termin%20anfragen.",
-  "aboutText": "Ein ruhiger Raum für Haar und Pflege: minimalistisch, fokussiert und persönlich. Ich arbeite mit Fingerspitzengefühl, klaren Linien und einem Sinn für natürliche Übergänge.",
+  "bookingUrl": "PLACEHOLDER_BOOKING_URL",
+  "aboutText": "PLACEHOLDER_ABOUT_TEXT",
   "services": [
     {
-      "title": "Färbung / Color",
-      "description": "Nuancierte Farbkonzepte mit subtiler Tiefe und Balance."
-    },
-    {
-      "title": "Balayage",
-      "description": "Weiche, fließende Highlights für einen natürlichen, lichtvollen Effekt."
-    },
-    {
-      "title": "Shatush",
-      "description": "Sanfte Verläufe für ein leises, elegantes Farbspiel."
-    },
-    {
-      "title": "Haarpflege",
-      "description": "Pflege-Rituale für Glanz, Struktur und langfristige Haargesundheit."
+      "title": "PLACEHOLDER_SERVICE_1",
+      "description": "PLACEHOLDER_SERVICE_1_DESC"
     }
   ],
   "contact": {
-    "address": "Nordendstraße 19, 80799 München, Deutschland",
-    "phone": "+49 176 78136186",
-    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Nordendstra%C3%9Fe%2019%2C%2080799%20M%C3%BCnchen%2C%20Deutschland",
-    "whatsAppUrl": "https://wa.me/4917678136186"
+    "address": "PLACEHOLDER_ADDRESS",
+    "phone": "PLACEHOLDER_PHONE",
+    "email": "PLACEHOLDER_EMAIL",
+    "mapsUrl": "PLACEHOLDER_GOOGLE_MAPS_URL"
   },
   "socials": {
     "instagramUrl": "https://www.instagram.com/ina_dalinger/"
