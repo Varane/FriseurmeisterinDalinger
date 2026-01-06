@@ -5,7 +5,6 @@ const elements = {
   aboutText: document.getElementById("about-text"),
   servicesGrid: document.getElementById("services-grid"),
   galleryGrid: document.getElementById("gallery-grid"),
-  featuredGrid: document.getElementById("featured-products"),
   contactAddress: document.getElementById("contact-address"),
   contactPhone: document.getElementById("contact-phone"),
   contactWhatsApp: document.getElementById("contact-whatsapp"),
@@ -14,7 +13,8 @@ const elements = {
   bookingLink: document.getElementById("booking-link"),
   footerYear: document.getElementById("footer-year"),
   instagramLink: document.getElementById("instagram-link"),
-  buildLabel: document.getElementById("build-label")
+  buildLabel: document.getElementById("build-label"),
+  lightbox: document.getElementById("gallery-lightbox")
 };
 
 const setText = (element, value) => {
@@ -42,33 +42,51 @@ const renderServices = (services = []) => {
   });
 };
 
-const renderFeaturedProducts = (products = []) => {
-  if (!elements.featuredGrid) return;
-  elements.featuredGrid.innerHTML = "";
+const lightboxState = {
+  lastFocusedElement: null
+};
 
-  products
-    .filter((product) => product.featured)
-    .slice(0, 3)
-    .forEach((product) => {
-      const card = document.createElement("article");
-      card.className = "card";
+const openLightbox = (item) => {
+  if (!elements.lightbox) return;
+  const image = elements.lightbox.querySelector(".lightbox-image");
+  const caption = elements.lightbox.querySelector(".lightbox-caption");
+  const closeButton = elements.lightbox.querySelector(".lightbox-close");
 
-      const title = document.createElement("h3");
-      setText(title, product.name);
+  if (!image || !caption || !closeButton) return;
 
-      const meta = document.createElement("p");
-      meta.className = "product-meta";
-      setText(meta, `${product.brand} · ${product.category}`);
+  image.src = item.src;
+  image.alt = item.alt || "";
+  const captionText = item.caption || item.alt || "";
+  setText(caption, captionText);
 
-      const desc = document.createElement("p");
-      setText(desc, product.shortDescription);
+  lightboxState.lastFocusedElement = document.activeElement;
+  elements.lightbox.showModal();
 
-      const price = document.createElement("p");
-      price.className = "product-price";
-      setText(price, `${product.priceEur} ${product.currency}`);
+  window.setTimeout(() => {
+    closeButton.focus();
+  }, 0);
+};
 
-      card.append(title, meta, desc, price);
-      elements.featuredGrid.appendChild(card);
+const setupLightbox = () => {
+  if (!elements.lightbox) return;
+  const closeButton = elements.lightbox.querySelector(".lightbox-close");
+
+  if (closeButton) {
+    closeButton.addEventListener("click", () => {
+      elements.lightbox.close();
+    });
+  }
+
+  elements.lightbox.addEventListener("click", (event) => {
+    if (event.target === elements.lightbox) {
+      elements.lightbox.close();
+    }
+  });
+
+  elements.lightbox.addEventListener("close", () => {
+    if (lightboxState.lastFocusedElement instanceof HTMLElement) {
+      lightboxState.lastFocusedElement.focus();
+    }
   });
 };
 
@@ -79,7 +97,7 @@ const renderGallery = (items = []) => {
   if (!Array.isArray(items) || items.length === 0) {
     const emptyState = document.createElement("p");
     emptyState.className = "gallery-empty";
-    setText(emptyState, "Noch keine Bilder – bitte im Admin hochladen.");
+    setText(emptyState, "Aktuell sind keine Bilder verfügbar.");
     elements.galleryGrid.appendChild(emptyState);
     return;
   }
@@ -97,13 +115,27 @@ const renderGallery = (items = []) => {
   sortedItems.forEach((item) => {
     const figure = document.createElement("figure");
     figure.className = "gallery-item";
+    figure.classList.toggle("contain", item.fit === "contain");
+    figure.classList.toggle("cover", item.fit !== "contain");
+
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "gallery-button";
+    button.setAttribute("aria-label", item.alt || "Galeriebild öffnen");
+    button.addEventListener("click", () => openLightbox(item));
+
+    const media = document.createElement("div");
+    media.className = "gallery-media";
 
     const image = document.createElement("img");
     image.src = item.src;
     image.alt = item.alt || "";
     image.loading = "lazy";
+    image.decoding = "async";
 
-    figure.appendChild(image);
+    media.appendChild(image);
+    button.appendChild(media);
+    figure.appendChild(button);
 
     if (item.caption) {
       const caption = document.createElement("figcaption");
@@ -165,13 +197,6 @@ const loadContent = async () => {
       }
     }
 
-    if (elements.featuredGrid) {
-      const productsResponse = await fetch("./data/products.json");
-      if (productsResponse.ok) {
-        const products = await productsResponse.json();
-        renderFeaturedProducts(products || []);
-      }
-    }
   } catch (error) {
     // Keep the existing HTML content when content loading fails.
     renderGallery([]);
@@ -181,3 +206,4 @@ const loadContent = async () => {
 setText(elements.footerYear, new Date().getFullYear().toString());
 
 loadContent();
+setupLightbox();

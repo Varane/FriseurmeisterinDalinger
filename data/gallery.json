@@ -1,3 +1,39 @@
 {
-  "items": []
+  "items": [
+    {
+      "src": "images/portfolio/portfolio-blonde-length-finish-01.webp",
+      "alt": "Back view of finished blonde hair, straight and smooth.",
+      "caption": "",
+      "order": 10,
+      "fit": "cover"
+    },
+    {
+      "src": "images/portfolio/portfolio-before-after-cut-color-01.webp",
+      "alt": "Before-and-after collage showing hair color and cut transformation.",
+      "caption": "",
+      "order": 20,
+      "fit": "contain"
+    },
+    {
+      "src": "images/portfolio/portfolio-blonde-bob-cut-01.webp",
+      "alt": "Blonde bob haircut from different angles.",
+      "caption": "",
+      "order": 30,
+      "fit": "contain"
+    },
+    {
+      "src": "images/portfolio/portfolio-before-after-blowdry-01.webp",
+      "alt": "Before-and-after comparison of hair finish.",
+      "caption": "",
+      "order": 40,
+      "fit": "contain"
+    },
+    {
+      "src": "images/portfolio/portfolio-before-after-curls-01.webp",
+      "alt": "Before-and-after comparison of curly hair styling.",
+      "caption": "",
+      "order": 50,
+      "fit": "contain"
+    }
+  ]
 }
