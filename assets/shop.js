@@ -1,8 +1,7 @@
+const PLACEHOLDER_PREFIX = "PLACEHOLDER_";
+
 const state = {
   products: [],
-  contact: {
-    whatsAppUrl: ""
-  },
   filters: {
     category: "all",
     min: "",
@@ -32,17 +31,20 @@ const elements = {
   footerYear: document.getElementById("footer-year")
 };
 
+const isPlaceholder = (value) =>
+  typeof value !== "string" || value.startsWith(PLACEHOLDER_PREFIX);
+
 const setText = (element, value) => {
   if (element) {
     element.textContent = value ?? "";
   }
 };
 
-const formatPrice = (value) => (value ? `${value} EUR` : "Preis auf Anfrage");
+const formatPrice = (value) => `${value} EUR`;
 
 const buildCategoryOptions = (products) => {
   const categories = Array.from(
-    new Set(products.map((product) => product.category || "Kategorie"))
+    new Set(products.map((product) => product.category || "PLACEHOLDER_CATEGORY"))
   ).sort();
 
   const options = ["all", ...categories];
@@ -87,9 +89,6 @@ const syncInlineInputs = () => {
   elements.sort.value = state.filters.sort;
 };
 
-const getPriceValue = (product) =>
-  typeof product.priceEur === "number" ? product.priceEur : null;
-
 const applyFilters = () => {
   const { category, min, max, search, sort } = state.filters;
   let filtered = [...state.products];
@@ -99,17 +98,11 @@ const applyFilters = () => {
   }
 
   if (min) {
-    filtered = filtered.filter((product) => {
-      const price = getPriceValue(product);
-      return price !== null && price >= Number(min);
-    });
+    filtered = filtered.filter((product) => product.priceEur >= Number(min));
   }
 
   if (max) {
-    filtered = filtered.filter((product) => {
-      const price = getPriceValue(product);
-      return price !== null && price <= Number(max);
-    });
+    filtered = filtered.filter((product) => product.priceEur <= Number(max));
   }
 
   if (search) {
@@ -122,17 +115,9 @@ const applyFilters = () => {
   }
 
   if (sort === "price-asc") {
-    filtered.sort((a, b) => {
-      const priceA = getPriceValue(a) ?? Number.POSITIVE_INFINITY;
-      const priceB = getPriceValue(b) ?? Number.POSITIVE_INFINITY;
-      return priceA - priceB;
-    });
+    filtered.sort((a, b) => a.priceEur - b.priceEur);
   } else if (sort === "price-desc") {
-    filtered.sort((a, b) => {
-      const priceA = getPriceValue(a) ?? Number.NEGATIVE_INFINITY;
-      const priceB = getPriceValue(b) ?? Number.NEGATIVE_INFINITY;
-      return priceB - priceA;
-    });
+    filtered.sort((a, b) => b.priceEur - a.priceEur);
   } else {
     filtered.sort((a, b) => Number(b.featured) - Number(a.featured));
   }
@@ -152,7 +137,7 @@ const renderProducts = (products) => {
 
     const media = document.createElement("div");
     media.className = "product-media";
-    setText(media, product.images?.[0]?.alt || "Produktfoto folgt");
+    setText(media, product.images?.[0]?.alt || "Produktbild");
 
     const body = document.createElement("div");
     body.className = "product-body";
@@ -163,19 +148,19 @@ const renderProducts = (products) => {
 
     const title = document.createElement("h3");
     title.className = "product-title";
-    setText(title, product.name || "Produkt");
+    setText(title, product.name || "PLACEHOLDER_PRODUCT_NAME");
 
     const meta = document.createElement("p");
     meta.className = "product-meta";
-    setText(meta, `${product.brand || "Studio"} · ${product.category || "Kategorie"}`);
+    setText(meta, `${product.brand || "PLACEHOLDER_BRAND"} · ${product.category || "PLACEHOLDER_CATEGORY"}`);
 
     const desc = document.createElement("p");
     desc.className = "product-meta";
-    setText(desc, product.shortDescription || "Details folgen.");
+    setText(desc, product.shortDescription || "PLACEHOLDER_SHORT_DESC");
 
     const price = document.createElement("p");
     price.className = "product-price";
-    setText(price, formatPrice(getPriceValue(product)));
+    setText(price, formatPrice(product.priceEur ?? "--"));
 
     body.append(badge, title, meta, desc, price);
 
@@ -187,21 +172,18 @@ const renderProducts = (products) => {
     buy.setAttribute("target", "_blank");
     buy.setAttribute("rel", "noreferrer");
 
-    if (product.paymentLinkUrl) {
+    if (product.paymentLinkUrl && !isPlaceholder(product.paymentLinkUrl)) {
       buy.setAttribute("href", product.paymentLinkUrl);
-      buy.textContent = "Jetzt kaufen";
+      buy.textContent = "Buy now";
     } else {
-      const message = encodeURIComponent(
-        `Hallo Ina, ich möchte „${product.name}“ per WhatsApp bestellen.`
-      );
-      const whatsAppBase = state.contact.whatsAppUrl || "https://wa.me/4917678136186";
-      buy.setAttribute("href", `${whatsAppBase}?text=${message}`);
-      buy.textContent = "Per WhatsApp bestellen";
+      buy.setAttribute("href", "#");
+      buy.setAttribute("aria-disabled", "true");
+      buy.textContent = "Not configured";
     }
 
     const details = document.createElement("p");
     details.className = "product-meta";
-    setText(details, product.description || "Details folgen.");
+    setText(details, product.description || "PLACEHOLDER_LONG_DESC");
 
     actions.append(buy, details);
 
@@ -258,19 +240,12 @@ const initDialog = () => {
   });
 };
 
-const loadContent = async () => {
+const loadProducts = async () => {
   try {
-    const [productsResponse, siteResponse] = await Promise.all([
-      fetch("../data/products.json"),
-      fetch("../data/site.json")
-    ]);
-    if (!productsResponse.ok || !siteResponse.ok) {
-      throw new Error("Failed to load content");
-    }
-    const products = await productsResponse.json();
-    const site = await siteResponse.json();
+    const response = await fetch("../data/products.json");
+    if (!response.ok) throw new Error("Failed to load products");
+    const products = await response.json();
     state.products = products;
-    state.contact.whatsAppUrl = site.contact?.whatsAppUrl || "";
     buildCategoryOptions(products);
     initFilters();
     initDialog();
@@ -282,4 +257,4 @@ const loadContent = async () => {
 
 setText(elements.footerYear, new Date().getFullYear().toString());
 
-loadContent();
+loadProducts();
